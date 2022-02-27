@@ -16,8 +16,6 @@ services:
       - db
     environment:
       MIX_ENV: dev
-    env_file:
-      - .env
     ports:
       - '4000:4000'
     expose:

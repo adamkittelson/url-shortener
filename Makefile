@@ -8,20 +8,22 @@
 # for the first time
 setup:
 	docker compose build
-
+	docker compose up -d
+	docker compose exec web mix deps.get
+	docker compose exec web mix ecto.create
+	docker compose exec -e MIX_ENV=test web mix deps.get
+	docker compose exec -e MIX_ENV=test web mix ecto.create
 
 # `make server` will be used after `make setup` in order to start
 # an http server process that listens on any unreserved port
 # of your choice (e.g. 8080).
 server:
-	docker compose up -d
-	docker compose run web iex -S mix phx.server
-
+	docker compose exec web iex -S mix phx.server
 
 # `make test` will be used after `make setup` in order to run
 # your test suite.
 test:
-	docker compose up -d
-	docker compose run -w /app/assets web npm test
-
-
+	echo "Running front-end tests..."
+	docker compose exec -w /app/assets web npm test
+	echo "Running back-end tests..."
+	docker compose exec -e MIX_ENV=test web mix test

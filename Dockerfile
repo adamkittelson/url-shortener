@@ -5,4 +5,6 @@ WORKDIR /app
 COPY mix.exs .
 COPY mix.lock .
 
-CMD mix deps.get && mix ecto.create
+RUN npm install -g npm@8.5.2
+
+ENTRYPOINT ["tail", "-f", "/dev/null"]

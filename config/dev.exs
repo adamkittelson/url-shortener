@@ -2,7 +2,7 @@ import Config
 
 # Configure your database
 config :url_shortener, UrlShortener.Repo,
-  url: System.get_env("DATABASE_URL"),
+  url: "postgres://postgres:postgres@db:5432/url_shortener_dev",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
