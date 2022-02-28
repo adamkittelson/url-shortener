@@ -1,19 +1,19 @@
-# UrlShortener
+# SmolURL
 
-To start your Phoenix server:
+This was coded on MacOS and tested on a Windows desktop (via the WSL Ubuntu shell) to try to avoid any
+'works on my machine' issues. Most of my Elixir background is otp heavy backend work without much API
+or front-end so it was fun leaving my comfort zone a bit for this exercise. This is also my first foray into learning React.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+## Prerequsites
+  * Docker must be installed
+  * Make must be installed
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+## Setup
+  * run `make setup`
 
-## Learn more
+## Running Tests
+  * run `make test`
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+## Running the Server
+  * run `make server`
