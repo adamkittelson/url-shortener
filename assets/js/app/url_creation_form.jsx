@@ -1,5 +1,4 @@
 import React from "react";
-import InputWithLabel from './url_creation_form/input_with_label';
 
 const UrlCreationForm = ({
   host,
@@ -24,7 +23,7 @@ const UrlCreationForm = ({
     <label htmlFor="url" className="label">
       🪄 Customize your link (optional)
     </label>
-    <div className="customize">
+    <div className="row">
       <input
         disabled={true}
         value={host}

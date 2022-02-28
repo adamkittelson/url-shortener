@@ -2,10 +2,10 @@ import "../../css/app.css"
 import React from "react";
 import axios from 'axios';
 
-import List from './list';
 import UrlCreationForm from './url_creation_form';
+import ShortUrlForm from './short_url_form';
 
-const API_ENDPOINT = window.location.origin + '/';
+const host = window.location.origin + '/';
 
 const useSemiPersistentState = (key, initialState) => {
   const [value, setValue] = React.useState(
@@ -22,6 +22,7 @@ const useSemiPersistentState = (key, initialState) => {
 const App = () => {
   const [url, setUrl] = useSemiPersistentState('url', '')
   const [slug, setSlug] = useSemiPersistentState('slug', '')
+  const [shortUrl, setShortUrl] = useSemiPersistentState('short-url', '')
 
   const handleUrlInput = (event) => {
     setUrl(event.target.value);
@@ -33,16 +34,22 @@ const App = () => {
 
   const handleCreateUrlSubmit = (event) => {
     createUrl();
-
     event.preventDefault();
   };
+
+  const handleCreateAnother = (event) => {
+    setShortUrl('')
+    setUrl('')
+    setSlug('')
+    event.preventDefault();
+  }
 
 
   const createUrl = async () => {
     try {
-      const result = await axios.post(API_ENDPOINT, { url: url, slug: slug });
+      const result = await axios.post(`${host}api`, { url: url, slug: slug });
 
-      console.log(result)
+      setShortUrl(result.data.url)
     } catch {
       console.log(result)
     }
@@ -51,17 +58,29 @@ const App = () => {
   return (
     <>
       <h1 className="headline-primary">
-        <a href={`${API_ENDPOINT}`}>SmolUrl</a>
+        <a href={host}>SmolUrl</a>
       </h1>
 
-      <UrlCreationForm
-        host={API_ENDPOINT}
-        url={url}
-        slug={slug}
-        onUrlInput={handleUrlInput}
-        onSlugInput={handleSlugInput}
-        onCreateUrlSubmit={handleCreateUrlSubmit}
-      />
+      <div className="card">
+        {shortUrl ? (
+          <ShortUrlForm
+            longUrl={url}
+            shortUrl={shortUrl}
+            onCreateAnotherSubmit={handleCreateAnother}
+          />
+        ) : (
+          <UrlCreationForm
+            host={host}
+            url={url}
+            slug={slug}
+            onUrlInput={handleUrlInput}
+            onSlugInput={handleSlugInput}
+            onCreateUrlSubmit={handleCreateUrlSubmit}
+          />
+        )}
+      </div>
+
+
 
     </>
   );

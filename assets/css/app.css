@@ -32,7 +32,7 @@ body {
   text-decoration: underline;
 }
 
-.url-creation-form {
+div.card {
   display: flex;
   flex-direction: column;
   background: #e0eef3;
@@ -42,13 +42,17 @@ body {
   margin-left: 70px;
   padding: 10px;
 }
+.url-creation-form {
+  display: flex;
+  flex-direction: column;
+}
 
-.url-creation-form label {
+div.card label {
   font-size: 0.9em;
   margin: 5px;
 }
 
-.url-creation-form input {
+div.card input {
   font-size: 1.2em;
   margin-bottom: 10px;
   border-radius: 10px;
@@ -58,7 +62,7 @@ body {
   background: #f4f9fb;
 }
 
-.url-creation-form button {
+div.card button {
   font-size: 1.1em;
   border-radius: 10px;
   padding: 15px 30px;
@@ -67,19 +71,29 @@ body {
   color: white;
 }
 
-.url-creation-form button:hover {
+div.card button:hover {
   background-color: #3f718f;
   cursor: pointer;
 }
 
-.url-creation-form button:disabled {
+div.card button:disabled {
   background-color: #adcadb;
   cursor:not-allowed;
 }
 
-.customize {
+.row {
   display: flex;
   flex-direction: row;
+}
+
+.row .short {
+  width: 100%;
+  margin-right: 10px;
+}
+
+.row button {
+  padding: 0 10px !important;
+  height: 44px;
 }
 
 .input.host {
