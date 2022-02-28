@@ -14,6 +14,15 @@ defmodule UrlShortener.ShortUrl do
     short_url
     |> cast(attrs, [:long_url, :slug])
     |> validate_required([:long_url, :slug])
+    |> validate_change(:long_url, fn :long_url, long_url ->
+      long_url = URI.parse(long_url)
+
+      if Enum.any?([:host, :scheme], &is_nil(Map.get(long_url, &1))) do
+        [long_url: "Invalid URL"]
+      else
+        []
+      end
+    end)
     |> unique_constraint(:slug)
   end
 end
