@@ -24,6 +24,6 @@ defmodule UrlShortenerWeb.Router do
   scope "/api", UrlShortenerWeb do
     pipe_through :api
 
-    post "/", ApiController, :create
+    post "/short_url", ShortUrlController, :create
   end
 end

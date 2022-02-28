@@ -1,4 +1,4 @@
-defmodule UrlShortenerWeb.ApiController do
+defmodule UrlShortenerWeb.ShortUrlController do
   use UrlShortenerWeb, :controller
   alias UrlShortener.{Repo, ShortUrl}
   require Logger
