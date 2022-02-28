@@ -9,6 +9,7 @@
 setup:
 	docker compose build
 	docker compose up -d
+	docker compose exec web npm --prefix assets install
 	docker compose exec web mix deps.get
 	docker compose exec web mix ecto.create
 	docker compose exec web mix ecto.migrate
