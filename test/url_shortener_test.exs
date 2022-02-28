@@ -16,7 +16,7 @@ defmodule UrlShortenerTest do
   end
 
   defp generate_slugs(context) do
-    slugs = Enum.map(1..1000, &UrlShortener.generate_slug/1)
+    slugs = Enum.map(1..1000, fn _n -> UrlShortener.generate_slug() end)
 
     Map.put(context, :slugs, slugs)
   end

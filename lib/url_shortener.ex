@@ -7,13 +7,15 @@ defmodule UrlShortener do
   if it comes from the database, an external API or others.
   """
 
-  def generate_slug(id) do
+  def generate_slug do
     unix_time =
       DateTime.utc_now()
       |> DateTime.to_unix()
 
+    unique_integer = System.unique_integer([:monotonic, :positive])
+
     integer =
-      "#{unix_time}#{id}"
+      "#{unix_time}#{unique_integer}"
       |> String.to_integer()
 
     Base62.encode(integer)

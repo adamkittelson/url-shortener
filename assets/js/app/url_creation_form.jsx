@@ -4,6 +4,7 @@ const UrlCreationForm = ({
   host,
   url,
   slug,
+  error,
   onUrlInput,
   onSlugInput,
   onCreateUrlSubmit
@@ -37,6 +38,8 @@ const UrlCreationForm = ({
         onChange={onSlugInput}
       />
     </div>
+
+    {error && (<span className="error">{error}</span>)}
 
     <button
       type="submit"

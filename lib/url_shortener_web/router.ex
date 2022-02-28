@@ -18,6 +18,7 @@ defmodule UrlShortenerWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/:slug", PageController, :show
   end
 
   scope "/api", UrlShortenerWeb do

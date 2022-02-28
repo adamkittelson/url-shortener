@@ -11,8 +11,10 @@ setup:
 	docker compose up -d
 	docker compose exec web mix deps.get
 	docker compose exec web mix ecto.create
+	docker compose exec web mix ecto.migrate
 	docker compose exec -e MIX_ENV=test web mix deps.get
 	docker compose exec -e MIX_ENV=test web mix ecto.create
+	docker compose exec -e MIX_ENV=test web mix ecto.migrate
 
 # `make server` will be used after `make setup` in order to start
 # an http server process that listens on any unreserved port

@@ -7,6 +7,10 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_HOST_AUTH_METHOD: trust
     image: 'postgres:14'
+    ports:
+      - '5433:5432'
+    expose:
+      - "5433"
     restart: always
     volumes:
       - 'pgdata:/var/lib/postgresql/data'

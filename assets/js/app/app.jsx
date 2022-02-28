@@ -23,6 +23,7 @@ const App = () => {
   const [url, setUrl] = useSemiPersistentState('url', '')
   const [slug, setSlug] = useSemiPersistentState('slug', '')
   const [shortUrl, setShortUrl] = useSemiPersistentState('short-url', '')
+  const [error, setError] = React.useState('');
 
   const handleUrlInput = (event) => {
     setUrl(event.target.value);
@@ -47,11 +48,12 @@ const App = () => {
 
   const createUrl = async () => {
     try {
-      const result = await axios.post(`${host}api`, { url: url, slug: slug });
+      const result = await axios.post(`${host}api`, { long_url: url, slug: slug });
 
-      setShortUrl(result.data.url)
-    } catch {
-      console.log(result)
+      setShortUrl(`${host}${result.data.slug}`)
+      setUrl(result.data.long_url)
+    } catch (error) {
+      setError(error.response.data.error)
     }
   };
 
@@ -73,6 +75,7 @@ const App = () => {
             host={host}
             url={url}
             slug={slug}
+            error={error}
             onUrlInput={handleUrlInput}
             onSlugInput={handleSlugInput}
             onCreateUrlSubmit={handleCreateUrlSubmit}
