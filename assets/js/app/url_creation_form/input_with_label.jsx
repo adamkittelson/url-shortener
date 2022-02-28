@@ -21,7 +21,6 @@ const InputWithLabel = ({
       <label htmlFor={id} className="label">
         {children}
       </label>
-      &nbsp;
       <input
         ref={inputRef}
         id={id}

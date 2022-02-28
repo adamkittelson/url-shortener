@@ -3,9 +3,9 @@ import React from "react";
 import axios from 'axios';
 
 import List from './list';
-import SearchForm from './search_form';
+import UrlCreationForm from './url_creation_form';
 
-const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
+const API_ENDPOINT = window.location.origin;
 
 const useSemiPersistentState = (key, initialState) => {
   const [value, setValue] = React.useState(
@@ -56,7 +56,7 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useSemiPersistentState('search', 'React')
 
   const [url, setUrl] = React.useState(
-    `${API_ENDPOINT}${searchTerm}`
+    `${API_ENDPOINT}/${searchTerm}`
   );
 
   const handleSearchInput = (event) => {
@@ -64,7 +64,7 @@ const App = () => {
   };
 
   const handleSearchSubmit = (event) => {
-    setUrl(`${API_ENDPOINT}${searchTerm}`);
+    setUrl(`${API_ENDPOINT}/${searchTerm}`);
 
     event.preventDefault();
   };
@@ -79,6 +79,7 @@ const App = () => {
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
 
     try {
+      console.log(url)
       const result = await axios.get(url);
 
       dispatchStories({
@@ -107,10 +108,13 @@ const App = () => {
   };
 
   return (
-    <div className="container">
-      <h1 className="headline-primary">My Hacker Stories</h1>
+    <>
+      <h1 className="headline-primary">
+        <a href={`${API_ENDPOINT}`}>SmolUrl</a>
+      </h1>
 
-      <SearchForm
+      <UrlCreationForm
+        host={API_ENDPOINT}
         searchTerm={searchTerm}
         onSearchInput={handleSearchInput}
         onSearchSubmit={handleSearchSubmit}
@@ -125,7 +129,7 @@ const App = () => {
       ) : (
         <List list={stories.data} onRemoveItem={handleRemoveStory} />
       )}
-    </div>
+    </>
   );
 }
 
