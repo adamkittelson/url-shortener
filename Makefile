@@ -27,6 +27,6 @@ server:
 test:
 	echo "Running back-end tests..."
 	docker compose exec -e MIX_ENV=test web mix test
-	# echo "Running front-end tests..."
-	# docker compose exec -w /app/assets web npm test
+	echo "Running front-end tests..."
+	docker compose exec -w /app/assets web npm test
 

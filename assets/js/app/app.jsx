@@ -48,7 +48,7 @@ const App = () => {
 
   const createUrl = async () => {
     try {
-      const result = await axios.post(`${host}api`, { long_url: url, slug: slug });
+      const result = await axios.post(`${host}api/short_url`, { long_url: url, slug: slug });
 
       setShortUrl(`${host}${result.data.slug}`)
       setUrl(result.data.long_url)

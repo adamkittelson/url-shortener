@@ -8,21 +8,23 @@ const ShortUrlForm = ({
   onCreateAnotherSubmit
 }) => (
   <>
-    <label htmlFor="url" className="label">
+    <label htmlFor="long_url" className="label">
       🔗 Your long URL
     </label>
     <input
+      id="long_url"
       value={longUrl}
       disabled
       className="input"
     />
 
-    <label htmlFor="url" className="label">
+    <label htmlFor="smol_url" className="label">
       🪄 SmolURL
     </label>
 
     <div className="row">
       <input
+        id="smol_url"
         disabled={true}
         value={shortUrl}
         disabled
