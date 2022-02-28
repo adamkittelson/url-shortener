@@ -67,6 +67,16 @@ body {
   color: white;
 }
 
+.url-creation-form button:hover {
+  background-color: #3f718f;
+  cursor: pointer;
+}
+
+.url-creation-form button:disabled {
+  background-color: #adcadb;
+  cursor:not-allowed;
+}
+
 .customize {
   display: flex;
   flex-direction: row;

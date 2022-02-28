@@ -5,7 +5,7 @@ import axios from 'axios';
 import List from './list';
 import UrlCreationForm from './url_creation_form';
 
-const API_ENDPOINT = window.location.origin;
+const API_ENDPOINT = window.location.origin + '/';
 
 const useSemiPersistentState = (key, initialState) => {
   const [value, setValue] = React.useState(
@@ -19,92 +19,33 @@ const useSemiPersistentState = (key, initialState) => {
   return [value, setValue];
 }
 
-const storiesReducer = (state, action) => {
-  switch (action.type) {
-    case 'STORIES_FETCH_INIT':
-      return {
-        ...state,
-        isLoading: true,
-        isError: false,
-      };
-    case 'STORIES_FETCH_SUCCESS':
-      return {
-        ...state,
-        isLoading: false,
-        isError: false,
-        data: action.payload,
-      };
-    case 'STORIES_FETCH_FAILURE':
-      return {
-        ...state,
-        isLoading: false,
-        isError: true,
-      };
-    case 'REMOVE_STORY':
-      return {
-        ...state,
-        data: state.data.filter(
-          (story) => action.payload.objectID !== story.objectID
-        ),
-      };
-    default:
-      throw new Error();
-  }
-};
-
 const App = () => {
-  const [searchTerm, setSearchTerm] = useSemiPersistentState('search', 'React')
+  const [url, setUrl] = useSemiPersistentState('url', '')
+  const [slug, setSlug] = useSemiPersistentState('slug', '')
 
-  const [url, setUrl] = React.useState(
-    `${API_ENDPOINT}/${searchTerm}`
-  );
-
-  const handleSearchInput = (event) => {
-    setSearchTerm(event.target.value);
+  const handleUrlInput = (event) => {
+    setUrl(event.target.value);
   };
 
-  const handleSearchSubmit = (event) => {
-    setUrl(`${API_ENDPOINT}/${searchTerm}`);
+  const handleSlugInput = (event) => {
+    setSlug(event.target.value);
+  };
+
+  const handleCreateUrlSubmit = (event) => {
+    createUrl();
 
     event.preventDefault();
   };
 
 
-  const [stories, dispatchStories] = React.useReducer(
-    storiesReducer,
-    { data: [], isLoading: false, isError: false }
-  );
-
-  const handleFetchStories = React.useCallback(async () => {
-    dispatchStories({ type: 'STORIES_FETCH_INIT' });
-
+  const createUrl = async () => {
     try {
-      console.log(url)
-      const result = await axios.get(url);
+      const result = await axios.post(API_ENDPOINT, { url: url, slug: slug });
 
-      dispatchStories({
-        type: 'STORIES_FETCH_SUCCESS',
-        payload: result.data.hits,
-      });
+      console.log(result)
     } catch {
-      dispatchStories({ type: 'STORIES_FETCH_FAILURE' });
+      console.log(result)
     }
-  }, [url]);
-
-  React.useEffect(() => {
-    handleFetchStories();
-  }, [handleFetchStories]);
-
-
-  const handleRemoveStory = (item) => {
-    dispatchStories({
-      type: 'REMOVE_STORY',
-      payload: item,
-    });
-  };
-
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
   };
 
   return (
@@ -115,25 +56,16 @@ const App = () => {
 
       <UrlCreationForm
         host={API_ENDPOINT}
-        searchTerm={searchTerm}
-        onSearchInput={handleSearchInput}
-        onSearchSubmit={handleSearchSubmit}
+        url={url}
+        slug={slug}
+        onUrlInput={handleUrlInput}
+        onSlugInput={handleSlugInput}
+        onCreateUrlSubmit={handleCreateUrlSubmit}
       />
 
-      <hr />
-
-      {stories.isError && <p>Something went wrong ...</p>}
-
-      {stories.isLoading ? (
-        <p>Loading ...</p>
-      ) : (
-        <List list={stories.data} onRemoveItem={handleRemoveStory} />
-      )}
     </>
   );
 }
 
 export default App;
-
-export { storiesReducer };
 

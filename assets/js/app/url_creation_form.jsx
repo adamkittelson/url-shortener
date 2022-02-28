@@ -3,45 +3,46 @@ import InputWithLabel from './url_creation_form/input_with_label';
 
 const UrlCreationForm = ({
   host,
-  searchTerm,
-  onSearchInput,
-  onSearchSubmit,
+  url,
+  slug,
+  onUrlInput,
+  onSlugInput,
+  onCreateUrlSubmit
 }) => (
-  <form onSubmit={onSearchSubmit} className="url-creation-form">
+  <form onSubmit={onCreateUrlSubmit} className="url-creation-form">
 
     <label htmlFor="url" className="label">
       🔗 Input a long URL to make a SmolURL
     </label>
     <input
-      ref={React.useRef()}
       id="url"
-      value={searchTerm}
-      onChange={onSearchInput}
+      value={url}
+      onChange={onUrlInput}
       className="input"
     />
 
     <label htmlFor="url" className="label">
-      🪄 Customize your link
+      🪄 Customize your link (optional)
     </label>
     <div className="customize">
       <input
         disabled={true}
-        value={`${host}/`}
+        value={host}
         className="input host"
-        size={host.length - 3}
+        size={host.length - 4}
       />
       <input
-        ref={React.useRef()}
+        id="slug"
         className="input slug"
-        value={searchTerm}
-        onChange={onSearchInput}
+        value={slug}
+        onChange={onSlugInput}
       />
     </div>
 
     <button
       type="submit"
       className="button button_large"
-      disabled={!searchTerm}
+      disabled={!url}
     >
       Make SmolURL!
     </button>
